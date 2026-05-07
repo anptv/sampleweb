@@ -1,0 +1,431 @@
+/* quiz.css — quiz-specific styles; loaded after style.css which provides base tokens */
+
+/* ── QUIZ COLOR TOKENS ──────────────────────────────── */
+:root {
+  --court-bg: #c8882a;
+  --court-line: #fff;
+  --zone-border: #ffffff88;
+  --card-bg: #1a1a2e;
+  --card-name-accent: #e94560;
+  --card-desc-accent: #0f3460;
+  --correct-glow: #22c55e;
+  --incorrect-glow: #ef4444;
+  --modal-bg: rgba(10, 10, 20, 0.95);
+  --quiz-bg: #0f0f1a;
+  --quiz-text: #f0f0f0;
+}
+
+/* ── QUIZ PAGE BASE ─────────────────────────────────── */
+/* Override light theme from style.css for the dark quiz page */
+body {
+  background: var(--quiz-bg);
+  color: var(--quiz-text);
+}
+
+/* ── NAV OVERRIDES ──────────────────────────────────── */
+nav {
+  background: rgba(15, 15, 26, 0.92);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  height: 56px;
+}
+.nav-logo {
+  color: var(--quiz-text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Lang toggle button in nav */
+.lang-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--quiz-text);
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: var(--font-sans);
+  transition: background 0.15s;
+}
+.lang-btn:hover { background: rgba(255, 255, 255, 0.1); }
+
+/* ── ARENA: 3-COLUMN GRID ───────────────────────────── */
+.arena {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  gap: 1rem;
+  padding: 1rem;
+  min-height: 80vh;
+  align-items: start;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ── TRAY ───────────────────────────────────────────── */
+.tray {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  min-height: 360px;
+}
+.tray h3 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+  opacity: 0.6;
+  color: var(--quiz-text);
+}
+
+/* Drop-back target highlight on tray */
+.tray.dragover-tray { background: rgba(255, 255, 255, 0.08); }
+
+/* ── COURT ──────────────────────────────────────────── */
+.court {
+  position: relative;
+  background: var(--court-bg);
+  aspect-ratio: 2 / 3;
+  border: 4px solid var(--court-line);
+  border-radius: 8px;
+  /* overflow hidden clips absolute children — touch clone goes on body instead */
+  overflow: hidden;
+}
+
+/* Court markings — decorative only */
+.court-key {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 30%;
+  border: 3px solid var(--court-line);
+  border-bottom: none;
+}
+.court-arc {
+  position: absolute;
+  bottom: 28%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 35%;
+  border: 3px solid var(--court-line);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  border-bottom: none;
+}
+.court-circle {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18%;
+  aspect-ratio: 1;
+  border: 3px solid var(--court-line);
+  border-radius: 50%;
+}
+
+/* ── DROP ZONES ─────────────────────────────────────── */
+.drop-zone {
+  position: absolute;
+  /* Centered on % coords via transform */
+  transform: translate(-50%, -50%);
+  width: 76px;
+  height: 76px;
+  border: 2px dashed var(--zone-border);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: default;
+}
+.drop-zone.dragover {
+  border-color: #fff;
+  box-shadow: 0 0 14px #fff8;
+}
+.drop-zone.correct {
+  border-color: var(--correct-glow);
+  box-shadow: 0 0 20px var(--correct-glow);
+  animation: glow-pulse 1.2s ease infinite;
+}
+.drop-zone.incorrect {
+  border-color: var(--incorrect-glow);
+  box-shadow: 0 0 20px var(--incorrect-glow);
+}
+
+.zone-number {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1;
+}
+
+/* ── SLOTS INSIDE DROP ZONES ────────────────────────── */
+.slot {
+  width: 68px;
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+.slot .card {
+  /* Card placed in slot: compact display */
+  font-size: 0.55rem;
+  padding: 2px 4px;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  line-height: 1.2;
+  white-space: normal;
+  cursor: grab;
+}
+
+/* ── CARDS ──────────────────────────────────────────── */
+.card {
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  cursor: grab;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  user-select: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+  color: #fff;
+}
+.card:hover  { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
+.card:active { cursor: grabbing; }
+.card--name  { background: var(--card-name-accent); }
+.card--desc  { background: var(--card-desc-accent); }
+.card.dragging { opacity: 0.35; }
+.card.locked   { cursor: default; opacity: 0.85; }
+.card.shake    { animation: shake 0.4s ease; }
+
+/* Touch drag floating clone */
+#touch-drag-clone {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.8;
+  transform: scale(1.05);
+  border-radius: 8px;
+}
+
+/* ── ACTION BAR ─────────────────────────────────────── */
+.action-bar {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.timer {
+  font-family: monospace;
+  font-size: 1.15rem;
+  color: var(--quiz-text);
+  min-width: 4.5ch;
+  text-align: center;
+}
+.btn-submit {
+  background: var(--card-name-accent);
+  color: #fff;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  transition: opacity 0.15s;
+}
+.btn-submit:hover { opacity: 0.88; }
+.btn-reset {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--quiz-text);
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  transition: background 0.15s;
+}
+.btn-reset:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* ── SCOREBOARD MODAL ───────────────────────────────── */
+dialog#modal-scoreboard {
+  background: var(--modal-bg);
+  color: var(--quiz-text);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 2rem;
+  min-width: 300px;
+  text-align: center;
+}
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+#modal-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.score-row {
+  margin: 0.6rem 0;
+  font-size: 1rem;
+  opacity: 0.85;
+}
+.score-row strong {
+  color: #fff;
+  opacity: 1;
+  margin-left: 0.25rem;
+}
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+.modal-actions button {
+  padding: 0.55rem 1.25rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  border: none;
+  transition: opacity 0.15s;
+}
+#btn-play-again {
+  background: var(--card-name-accent);
+  color: #fff;
+}
+#btn-review {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+.modal-actions button:hover { opacity: 0.85; }
+
+/* ── REVIEW OVERLAY ─────────────────────────────────── */
+#review-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 20, 0.97);
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  overflow-y: auto;
+}
+#review-overlay[hidden] { display: none; }
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 1.5rem;
+}
+.review-header h2 { font-size: 1.4rem; }
+#btn-close-review {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+#btn-close-review:hover { background: rgba(255, 255, 255, 0.2); }
+
+.review-list {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.review-zone {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 1rem;
+  border-left: 4px solid var(--correct-glow);
+}
+.review-zone-num {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--correct-glow);
+  min-width: 1.5rem;
+  text-align: center;
+}
+.review-content { flex: 1; }
+.review-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.35rem;
+  color: #fff;
+}
+.review-desc {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+/* ── ANIMATIONS ─────────────────────────────────────── */
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%,60%  { transform: translateX(-7px); }
+  40%,80%  { transform: translateX(7px); }
+}
+@keyframes glow-pulse {
+  0%,100% { box-shadow: 0 0 10px var(--correct-glow); }
+  50%     { box-shadow: 0 0 26px var(--correct-glow); }
+}
+
+/* ── RESPONSIVE: TABLET (≤ 900px) ──────────────────── */
+@media (max-width: 900px) {
+  .arena {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    min-height: unset;
+  }
+  .tray {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    min-height: unset;
+  }
+  .tray h3 { width: 100%; }
+  .tray .card { margin-bottom: 0; }
+  .court {
+    /* Portrait orientation preserved — drop zone % positions stay valid */
+    aspect-ratio: 2 / 3;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+}
+
+/* ── RESPONSIVE: MOBILE (≤ 600px) ──────────────────── */
+@media (max-width: 600px) {
+  .card { font-size: 0.75rem; padding: 0.4rem 0.6rem; }
+  .tray { padding: 0.5rem; }
+  .action-bar { gap: 0.5rem; }
+  .btn-submit, .btn-reset { font-size: 0.85rem; padding: 0.5rem 0.9rem; }
+  dialog#modal-scoreboard { min-width: 90vw; padding: 1.5rem; }
+}

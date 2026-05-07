@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basketball Positions Quiz</title>
+  <!-- style.css first: provides base tokens, fonts, nav styles inherited by quiz -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="quiz.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <!-- href="index.html" intentional: quiz.html is a separate page, not a hash anchor -->
+      <a href="index.html" class="nav-logo">Basketball</a>
+      <button id="lang-toggle" class="lang-btn js-i18n" aria-label="Toggle language"
+              data-en="EN | VN" data-vn="VN | EN">EN | VN</button>
+    </div>
+  </nav>
+
+  <main class="arena">
+
+    <!-- LEFT TRAY: Position Name Cards -->
+    <aside class="tray tray--names">
+      <h3 class="js-i18n" data-en="Position Names" data-vn="Tên vị trí">Position Names</h3>
+      <div class="card card--name js-i18n" draggable="true"
+           data-id="name-1" data-type="name" data-position="1"
+           data-en="Point Guard (PG)" data-vn="Hậu vệ dẫn bóng (PG)">Point Guard (PG)</div>
+      <div class="card card--name js-i18n" draggable="true"
+           data-id="name-2" data-type="name" data-position="2"
+           data-en="Shooting Guard (SG)" data-vn="Hậu vệ ném rổ (SG)">Shooting Guard (SG)</div>
+      <div class="card card--name js-i18n" draggable="true"
+           data-id="name-3" data-type="name" data-position="3"
+           data-en="Small Forward (SF)" data-vn="Tiền đạo nhỏ (SF)">Small Forward (SF)</div>
+      <div class="card card--name js-i18n" draggable="true"
+           data-id="name-4" data-type="name" data-position="4"
+           data-en="Power Forward (PF)" data-vn="Tiền đạo lớn (PF)">Power Forward (PF)</div>
+      <div class="card card--name js-i18n" draggable="true"
+           data-id="name-5" data-type="name" data-position="5"
+           data-en="Center (C)" data-vn="Trung phong (C)">Center (C)</div>
+    </aside>
+
+    <!-- CENTER: Tactical Court with 5 Drop Zones -->
+    <section class="court">
+      <!-- Decorative court markings -->
+      <div class="court-arc"></div>
+      <div class="court-key"></div>
+      <div class="court-circle"></div>
+
+      <!-- Zone 1: Point Guard — top center -->
+      <div class="drop-zone" data-zone="1" style="top:12%;left:48%">
+        <span class="zone-number">1</span>
+        <div class="slot slot--name" data-accepts="name"></div>
+        <div class="slot slot--desc" data-accepts="desc"></div>
+      </div>
+
+      <!-- Zone 2: Shooting Guard — right wing -->
+      <div class="drop-zone" data-zone="2" style="top:32%;left:72%">
+        <span class="zone-number">2</span>
+        <div class="slot slot--name" data-accepts="name"></div>
+        <div class="slot slot--desc" data-accepts="desc"></div>
+      </div>
+
+      <!-- Zone 3: Small Forward — left wing -->
+      <div class="drop-zone" data-zone="3" style="top:32%;left:20%">
+        <span class="zone-number">3</span>
+        <div class="slot slot--name" data-accepts="name"></div>
+        <div class="slot slot--desc" data-accepts="desc"></div>
+      </div>
+
+      <!-- Zone 4: Power Forward — right block -->
+      <div class="drop-zone" data-zone="4" style="top:58%;left:68%">
+        <span class="zone-number">4</span>
+        <div class="slot slot--name" data-accepts="name"></div>
+        <div class="slot slot--desc" data-accepts="desc"></div>
+      </div>
+
+      <!-- Zone 5: Center — key/paint area -->
+      <div class="drop-zone" data-zone="5" style="top:65%;left:44%">
+        <span class="zone-number">5</span>
+        <div class="slot slot--name" data-accepts="name"></div>
+        <div class="slot slot--desc" data-accepts="desc"></div>
+      </div>
+    </section>
+
+    <!-- RIGHT TRAY: Role Description Cards -->
+    <aside class="tray tray--desc">
+      <h3 class="js-i18n" data-en="Role Descriptions" data-vn="Mô tả vai trò">Role Descriptions</h3>
+      <div class="card card--desc js-i18n" draggable="true"
+           data-id="desc-1" data-type="desc" data-position="1"
+           data-en="Directs the offense, controls game tempo, and sets up teammates with court vision"
+           data-vn="Chỉ đạo tấn công, điều tiết nhịp chơi và tổ chức cơ hội cho đồng đội">
+        Directs the offense, controls game tempo, and sets up teammates with court vision</div>
+      <div class="card card--desc js-i18n" draggable="true"
+           data-id="desc-2" data-type="desc" data-position="2"
+           data-en="Perimeter scorer who excels at off-ball movement and catch-and-shoot plays"
+           data-vn="Chuyên gia ghi điểm ngoài vòng cung, di chuyển không bóng và bắt-ném chuẩn xác">
+        Perimeter scorer who excels at off-ball movement and catch-and-shoot plays</div>
+      <div class="card card--desc js-i18n" draggable="true"
+           data-id="desc-3" data-type="desc" data-position="3"
+           data-en="Versatile two-way player who can score from anywhere and guard multiple positions"
+           data-vn="Cầu thủ đa năng, ghi điểm linh hoạt mọi vị trí và phòng thủ nhiều vị trí">
+        Versatile two-way player who can score from anywhere and guard multiple positions</div>
+      <div class="card card--desc js-i18n" draggable="true"
+           data-id="desc-4" data-type="desc" data-position="4"
+           data-en="Physical inside player who dominates the boards, sets screens, and scores in the post"
+           data-vn="Thể lực vượt trội, cướp bóng rổ, đặt màn chắn và ghi điểm ở gần rổ">
+        Physical inside player who dominates the boards, sets screens, and scores in the post</div>
+      <div class="card card--desc js-i18n" draggable="true"
+           data-id="desc-5" data-type="desc" data-position="5"
+           data-en="Rim protector who blocks shots, dominates the paint, and scores around the basket"
+           data-vn="Bảo vệ rổ, cản phá cú ném, khống chế khu vực sơn và ghi điểm quanh rổ">
+        Rim protector who blocks shots, dominates the paint, and scores around the basket</div>
+    </aside>
+
+  </main>
+
+  <!-- ACTION BAR: timer + submit + reset -->
+  <div class="action-bar">
+    <span id="timer" class="timer" aria-live="polite">00:00</span>
+    <button id="btn-submit" class="btn-submit js-i18n"
+            data-en="Check Results" data-vn="Kiểm tra kết quả">Check Results</button>
+    <button id="btn-reset" class="btn-reset js-i18n"
+            data-en="Reset" data-vn="Chơi lại">Reset</button>
+  </div>
+
+  <!-- SCOREBOARD MODAL -->
+  <dialog id="modal-scoreboard" aria-labelledby="modal-title" aria-modal="true">
+    <h2 id="modal-title" class="js-i18n" data-en="Results" data-vn="Kết quả">Results</h2>
+    <div class="score-row">
+      <span class="js-i18n" data-en="Accuracy" data-vn="Độ chính xác">Accuracy</span>:
+      <strong><span id="score-accuracy"></span>/10</strong>
+    </div>
+    <div class="score-row">
+      <span class="js-i18n" data-en="Time" data-vn="Thời gian">Time</span>:
+      <strong><span id="score-time"></span></strong>
+    </div>
+    <div class="score-row">
+      <span class="js-i18n" data-en="Rank" data-vn="Hạng">Rank</span>:
+      <strong><span id="score-rank"></span></strong>
+    </div>
+    <div class="modal-actions">
+      <button id="btn-play-again" class="js-i18n"
+              data-en="Play Again" data-vn="Chơi lại">Play Again</button>
+      <button id="btn-review" class="js-i18n"
+              data-en="Review" data-vn="Xem đáp án">Review</button>
+    </div>
+  </dialog>
+
+  <!-- REVIEW OVERLAY — sibling of dialog, NOT inside it -->
+  <!-- A closed <dialog> is display:none; the overlay must be outside it -->
+  <div id="review-overlay" hidden>
+    <div class="review-header">
+      <h2 class="js-i18n" data-en="Answer Key" data-vn="Đáp án">Answer Key</h2>
+      <button id="btn-close-review" class="js-i18n" data-en="Close" data-vn="Đóng">Close</button>
+    </div>
+    <div class="review-list">
+      <div class="review-zone" data-review-zone="1">
+        <span class="review-zone-num">1</span>
+        <div class="review-content">
+          <div class="review-name"></div>
+          <div class="review-desc"></div>
+        </div>
+      </div>
+      <div class="review-zone" data-review-zone="2">
+        <span class="review-zone-num">2</span>
+        <div class="review-content">
+          <div class="review-name"></div>
+          <div class="review-desc"></div>
+        </div>
+      </div>
+      <div class="review-zone" data-review-zone="3">
+        <span class="review-zone-num">3</span>
+        <div class="review-content">
+          <div class="review-name"></div>
+          <div class="review-desc"></div>
+        </div>
+      </div>
+      <div class="review-zone" data-review-zone="4">
+        <span class="review-zone-num">4</span>
+        <div class="review-content">
+          <div class="review-name"></div>
+          <div class="review-desc"></div>
+        </div>
+      </div>
+      <div class="review-zone" data-review-zone="5">
+        <span class="review-zone-num">5</span>
+        <div class="review-content">
+          <div class="review-name"></div>
+          <div class="review-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="quiz.js"></script>
+</body>
+</html>
