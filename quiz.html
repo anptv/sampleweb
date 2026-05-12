@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="quiz.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Kanit:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet" />
 </head>
 <body>
 
@@ -20,6 +21,24 @@
               data-en="EN | VN" data-vn="VN | EN">EN | VN</button>
     </div>
   </nav>
+
+  <!-- Page header -->
+  <header class="quiz-header">
+    <div class="quiz-header-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#FFB81C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M5.4 5.4l13.2 13.2"></path>
+        <path d="M18.6 5.4L5.4 18.6"></path>
+        <path d="M12 2a10 10 0 0 0 0 20"></path>
+        <path d="M2 12h20"></path>
+      </svg>
+    </div>
+    <h1>Basketball <span>Quiz</span></h1>
+    <p class="quiz-header-sub js-i18n" data-en="Drag each card to the matching position on the court" data-vn="Kéo thẻ vào đúng vị trí trên sân">Drag each card to the matching position on the court</p>
+  </header>
+
+  <!-- Arena card wrapper -->
+  <div class="arena-card">
 
   <main class="arena">
 
@@ -45,41 +64,45 @@
 
     <!-- CENTER: Tactical Court with 5 Drop Zones -->
     <section class="court">
-      <!-- Decorative court markings -->
-      <div class="court-arc"></div>
+      <!-- Court markings — half-court from baseline (bottom) to half-court line (top) -->
+      <div class="court-half-circle"></div>
+      <div class="court-half-line"></div>
+      <div class="court-3pt-line"></div>
+      <div class="court-3pt-corner-left"></div>
+      <div class="court-3pt-corner-right"></div>
       <div class="court-key"></div>
-      <div class="court-circle"></div>
+      <div class="court-key-circle"></div>
 
-      <!-- Zone 1: Point Guard — top center -->
-      <div class="drop-zone" data-zone="1" style="top:12%;left:48%">
+      <!-- Zone 1: Point Guard — top of key / above 3pt arc -->
+      <div class="drop-zone" data-zone="1" style="top:25%;left:50%">
         <span class="zone-number">1</span>
         <div class="slot slot--name" data-accepts="name"></div>
         <div class="slot slot--desc" data-accepts="desc"></div>
       </div>
 
-      <!-- Zone 2: Shooting Guard — right wing -->
-      <div class="drop-zone" data-zone="2" style="top:32%;left:72%">
+      <!-- Zone 2: Shooting Guard — right wing on 3pt line -->
+      <div class="drop-zone" data-zone="2" style="top:40%;left:85%">
         <span class="zone-number">2</span>
         <div class="slot slot--name" data-accepts="name"></div>
         <div class="slot slot--desc" data-accepts="desc"></div>
       </div>
 
-      <!-- Zone 3: Small Forward — left wing -->
-      <div class="drop-zone" data-zone="3" style="top:32%;left:20%">
+      <!-- Zone 3: Small Forward — left wing on 3pt line -->
+      <div class="drop-zone" data-zone="3" style="top:40%;left:15%">
         <span class="zone-number">3</span>
         <div class="slot slot--name" data-accepts="name"></div>
         <div class="slot slot--desc" data-accepts="desc"></div>
       </div>
 
-      <!-- Zone 4: Power Forward — right block -->
-      <div class="drop-zone" data-zone="4" style="top:58%;left:68%">
+      <!-- Zone 4: Power Forward — left block / post -->
+      <div class="drop-zone" data-zone="4" style="top:75%;left:25%">
         <span class="zone-number">4</span>
         <div class="slot slot--name" data-accepts="name"></div>
         <div class="slot slot--desc" data-accepts="desc"></div>
       </div>
 
-      <!-- Zone 5: Center — key/paint area -->
-      <div class="drop-zone" data-zone="5" style="top:65%;left:44%">
+      <!-- Zone 5: Center — low post / paint center -->
+      <div class="drop-zone" data-zone="5" style="top:85%;left:50%">
         <span class="zone-number">5</span>
         <div class="slot slot--name" data-accepts="name"></div>
         <div class="slot slot--desc" data-accepts="desc"></div>
@@ -126,6 +149,8 @@
     <button id="btn-reset" class="btn-reset js-i18n"
             data-en="Reset" data-vn="Chơi lại">Reset</button>
   </div>
+
+  </div><!-- end .arena-card -->
 
   <!-- SCOREBOARD MODAL -->
   <dialog id="modal-scoreboard" aria-labelledby="modal-title" aria-modal="true">
